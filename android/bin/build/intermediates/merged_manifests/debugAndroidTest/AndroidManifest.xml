@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tappayment.test" >
+
+    <uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="22" />
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:functionalTest="false"
+        android:handleProfiling="false"
+        android:label="Tests for com.tappayment.test"
+        android:targetPackage="com.tappayment.test" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+    <application
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:debuggable="true"
+        android:supportsRtl="true" >
+        <uses-library android:name="android.test.runner" />
+
+        <activity
+            android:name="com.tappayment.RNTapPaymentActivity"
+            android:parentActivityName="com.tappayment.MainActivity" />
+        <activity
+            android:name="company.tap.gosellapi.internal.activities.GoSellPaymentActivity"
+            android:theme="@style/TransparentCompat"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name="company.tap.gosellapi.internal.activities.GoSellCardAddressActivity"
+            android:theme="@style/GoSellSDKAppTheme" />
+        <activity
+            android:name="company.tap.gosellapi.internal.activities.CurrenciesActivity"
+            android:theme="@style/GoSellSDKAppTheme" />
+        <activity
+            android:name="company.tap.gosellapi.internal.activities.BaseActionBarActivity"
+            android:theme="@style/GoSellSDKAppTheme" />
+        <activity
+            android:name="company.tap.gosellapi.internal.activities.WebPaymentActivity"
+            android:theme="@style/GoSellSDKAppTheme" />
+        <activity
+            android:name="company.tap.gosellapi.internal.activities.CountriesActivity"
+            android:theme="@style/GoSellSDKAppTheme" />
+        <activity
+            android:name="io.card.payment.CardIOActivity"
+            android:configChanges="keyboardHidden|orientation" />
+        <activity android:name="io.card.payment.DataEntryActivity" />
+    </application>
+
+</manifest>

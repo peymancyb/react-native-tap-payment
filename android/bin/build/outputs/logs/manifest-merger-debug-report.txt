@@ -1,0 +1,45 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:2:1-7:12
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:2:1-7:12
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:2:1-7:12
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:2:1-7:12
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:2:1-7:12
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:2:1-7:12
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:2:1-7:12
+	package
+		ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:3:11-35
+		INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+		INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+		ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:2:1-7:12
+		INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+		ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:2:1-7:12
+		INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:2:11-69
+application
+ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:4:5-6:19
+activity#com.tappayment.RNTapPaymentActivity
+ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:5:7-99
+	android:parentActivityName
+		ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:5:54-96
+	android:name
+		ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml:5:17-53
+uses-sdk
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+		ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+		INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+		ADDED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
+		INJECTED from /home/pankaj/projects/autoappkw-hybrid/AutoAppKW/modified_modules/react-native-tap-payment/android/src/main/AndroidManifest.xml
