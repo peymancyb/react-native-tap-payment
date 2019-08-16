@@ -54,8 +54,6 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
         String SecretAPIkey = extras.getString("SecretAPIkey");
         String AppID = extras.getString("AppID");
 
-        System.out.println("SecretAPIkey => " + SecretAPIkey);
-        System.out.println("AppID => " + AppID);
         GoSellSDK.init(this, SecretAPIkey, AppID);
 
         configureSDKThemeObject();
@@ -72,103 +70,38 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
     }
 
     private void configureSDKSession() {
-
         Bundle extras = getIntent().getExtras();
         int price = extras.getInt("price");
         String Currency = extras.getString("Currency");
 
-        // Instantiate SDK Session
-        if (sdkSession == null)
-            sdkSession = new SDKSession(); // ** Required **
+        if (sdkSession == null){
+            sdkSession = new SDKSession();
+        }
 
-        // pass your activity as a session delegate to listen to SDK internal payment
-        // process follow
-        sdkSession.addSessionDelegate(this); // ** Required **
-
-        // initiate PaymentDataSource
-        sdkSession.instantiatePaymentDataSource(); // ** Required **
-
-        // set transaction currency associated to your account
-        sdkSession.setTransactionCurrency(new TapCurrency(Currency)); // ** Required **
-
-
-        // Using static CustomerBuilder method available inside TAP Customer Class you
-        // can populate TAP Customer object and pass it to SDK
-        sdkSession.setCustomer(getCustomer()); // ** Required **
-
-        // Enable or Disable Saving Card
-        sdkSession.isUserAllowedToSaveCard(true); //  ** Required ** you can pass boolean
-
-        // Set Total Amount. The Total amount will be recalculated according to provided
-        // Taxes and Shipping
-        sdkSession.setAmount(new BigDecimal(price)); // ** Required **
-
-        // set transaction mode [TransactionMode.PURCHASE -
-        // TransactionMode.AUTHORIZE_CAPTURE - TransactionMode.SAVE_CARD -
-        // TransactionMode.TOKENIZE_CARD ]
-        sdkSession.setTransactionMode(TransactionMode.PURCHASE); // ** Required **
-
-        // Post URL
-        sdkSession.setPostURL(""); // ** Optional **
-
-        // Payment Description
-        sdkSession.setPaymentDescription(""); // ** Optional **
-
-        // Payment Reference
-        sdkSession.setPaymentReference(null); // ** Optional ** you can pass null
-
-        // Payment Statement Descriptor
-        sdkSession.setPaymentStatementDescriptor(""); // ** Optional **
-
-        // Enable or Disable 3DSecure
+        sdkSession.addSessionDelegate(this);
+        sdkSession.instantiatePaymentDataSource();
+        sdkSession.setTransactionCurrency(new TapCurrency(Currency));
+        sdkSession.setCustomer(getCustomer());
+        sdkSession.isUserAllowedToSaveCard(true);
+        sdkSession.setAmount(new BigDecimal(price));
+        sdkSession.setTransactionMode(TransactionMode.PURCHASE);
+        sdkSession.setPostURL("");
+        sdkSession.setPaymentDescription("");
+        sdkSession.setPaymentReference(null);
+        sdkSession.setPaymentStatementDescriptor("");
         sdkSession.isRequires3DSecure(true);
-
-        // Set Receipt Settings [SMS - Email ]
-        sdkSession.setReceiptSettings(new Receipt(false, true)); // ** Optional ** you can pass Receipt object or null
-
-        // Set Authorize Action
-        sdkSession.setAuthorizeAction(null); // ** Optional ** you can pass AuthorizeAction object or null
-
-        sdkSession.setDestination(null); // ** Optional ** you can pass Destinations object or null
-
-        sdkSession.setMerchantID(null); // ** Optional ** you can pass merchant id or null
-
-        // initPayButton();
-
-        /**
-         * Use this method where ever you want to show TAP SDK Main Screen. This method
-         * must be called after you configured SDK as above This method will be used in
-         * case of you are not using TAP PayButton in your activity.
-         */
+        sdkSession.setReceiptSettings(new Receipt(false, true));
+        sdkSession.setAuthorizeAction(null);
+        sdkSession.setDestination(null);
+        sdkSession.setMerchantID(null);
         sdkSession.start(this);
     }
 
-//     private void initPayButton() {
-
-//         payButtonView = findViewById(R.id.payButtonId);
-
-//         payButtonView.setupFontTypeFace(ThemeObject.getInstance().getPayButtonFont());
-
-//         payButtonView.setupTextColor(ThemeObject.getInstance().getPayButtonEnabledTitleColor(),
-//                 ThemeObject.getInstance().getPayButtonDisabledTitleColor());
-// //
-//         payButtonView.getPayButton().setTextSize(ThemeObject.getInstance().getPayButtonTextSize());
-// //
-//         payButtonView.getSecurityIconView().setVisibility(ThemeObject.getInstance().isPayButtSecurityIconVisible()?View.VISIBLE:View.INVISIBLE);
-
-//         payButtonView.setBackgroundSelector(ThemeObject.getInstance().getPayButtonResourceId());
-//         payButtonView.setupBackgroundWithColorList(getResources().getColor(R.color.yellow) , getResources().getColor(R.color.red));
-
-//         sdkSession.setButtonView(payButtonView, this, SDK_REQUEST_CODE);
-//     }
-
-
     private Customer getCustomer() {
         Bundle extras = getIntent().getExtras();
-        String CustomerId = extras.getString("CustomerId");
-        return new Customer.CustomerBuilder(CustomerId).email("pankaj@teamlance.io")
-                .firstName("firstname").lastName("lastname").metadata("").phone(new PhoneNumber("000", "0000000"))
-                .middleName("middlename").build();
+        String CustomerIdString = extras.getString("CustomerId");
+        String CustomerId = (CustomerIdString.length() == 0) ? null : CustomerIdString;
+        return new Customer.CustomerBuilder(CustomerId).build();
     }
 
     public void paymentSucceed(@NonNull Charge charge) {
@@ -221,9 +154,7 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
     @Override
     public void savedCardsList(@NonNull CardsList cardsList) {
 
-    }
-
-    ;
+    };
 
     public void cardTokenizedSuccessfully(@NonNull String token) {
     };
@@ -267,9 +198,7 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
     @Override
     public void invalidCustomerID() {
 
-    }
-
-    ;
+    };
 
     // private void sendEvent(String eventName, @Nullable WritableMap params) {
     // getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
