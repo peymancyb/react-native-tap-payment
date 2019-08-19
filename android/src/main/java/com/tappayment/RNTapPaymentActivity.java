@@ -64,9 +64,27 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
     private void configureSDKThemeObject() {
 
         ThemeObject.getInstance()
-                // set Appearance mode [Full Screen Mode - Windowed Mode]
-                .setAppearanceMode(AppearanceMode.WINDOWED_MODE); // **Required**
+        // set Appearance mode [Full Screen Mode - Windowed Mode]
+        .setAppearanceMode(AppearanceMode.FULLSCREEN_MODE) // **Required**
+        .setHeaderTextColor(getResources().getColor(R.color.black1))
+        .setHeaderTextSize(17)
+        .setHeaderBackgroundColor(getResources().getColor(R.color.french_gray_new))
+        .setCardInputTextColor(getResources().getColor(R.color.black))
+        .setCardInputInvalidTextColor(getResources().getColor(R.color.red))
+        .setCardInputPlaceholderTextColor(getResources().getColor(R.color.gray))
+        .setSaveCardSwitchOffThumbTint(getResources().getColor(R.color.french_gray_new))
+        .setSaveCardSwitchOnThumbTint(getResources().getColor(R.color.vibrant_green))
+        .setSaveCardSwitchOffTrackTint(getResources().getColor(R.color.french_gray))
+        .setSaveCardSwitchOnTrackTint(getResources().getColor(R.color.vibrant_green_pressed))
 
+        .setScanIconDrawable(getResources().getDrawable(R.drawable.btn_card_scanner_normal))
+
+        .setPayButtonResourceId(R.drawable.btn_pay_selector)  //btn_pay_merchant_selector
+        .setPayButtonDisabledTitleColor(getResources().getColor(R.color.white))
+        .setPayButtonEnabledTitleColor(getResources().getColor(R.color.white))
+        .setPayButtonTextSize(14)
+        .setPayButtonLoaderVisible(true)
+        .setPayButtonSecurityIconVisible(true);
     }
 
     private void configureSDKSession() {
