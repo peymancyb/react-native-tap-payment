@@ -99,7 +99,7 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
 
     private Customer getCustomer() {
         Bundle extras = getIntent().getExtras();
-        String CustomerId = extras.getString("CustomerId");
+        String CustomerId = extras.getString("CustomerId")
         return new Customer.CustomerBuilder(CustomerId).email("abc@abc.com").firstName("firstname")
             .lastName("lastname").metadata("").phone(new PhoneNumber("965","65562630"))
             .middleName("middlename").build();
