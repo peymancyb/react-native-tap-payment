@@ -27,7 +27,7 @@ public class RNTapPaymentModule extends ReactContextBaseJavaModule {
     @Override
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
       // System.out.println(resultCode);
-    callback.invoke(intent.getString());
+      callback.invoke(resultCode);
     }
   };
 
