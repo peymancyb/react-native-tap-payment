@@ -90,7 +90,7 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
     private void configureSDKSession() {
 
         Bundle extras = getIntent().getExtras();
-        int price = extras.getInt("price");
+        double price = extras.getDouble("price");
         String Currency = extras.getString("Currency");
 
         // Instantiate SDK Session

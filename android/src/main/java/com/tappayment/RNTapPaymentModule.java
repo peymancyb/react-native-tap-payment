@@ -32,7 +32,7 @@ public class RNTapPaymentModule extends ReactContextBaseJavaModule {
   };
 
   @ReactMethod
-  public void openTapPaymentUI(String SecretAPIkey, String AppID, String CustomerId, String Currency, int price, Callback callback1) {
+  public void openTapPaymentUI(String SecretAPIkey, String AppID, String CustomerId, String Currency, double price, Callback callback1) {
     Activity currentActivity = getCurrentActivity();
     ReactApplicationContext context = getReactApplicationContext();
     callback = callback1;
