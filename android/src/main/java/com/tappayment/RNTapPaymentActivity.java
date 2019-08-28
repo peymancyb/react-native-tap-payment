@@ -99,9 +99,10 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
 
     private Customer getCustomer() {
         Bundle extras = getIntent().getExtras();
-        String CustomerIdString = extras.getString("CustomerId");
-        String CustomerId = (CustomerIdString.length() == 0) ? null : CustomerIdString;
-        return new Customer.CustomerBuilder(CustomerId).build();
+        String CustomerId = extras.getString("CustomerId");
+        return new Customer.CustomerBuilder(CustomerId).email("pankaj@teamlance.io")
+                .firstName("firstname").lastName("lastname").metadata("").phone(new PhoneNumber("000", "0000000"))
+                .middleName("middlename").build();
     }
 
     public void paymentSucceed(@NonNull Charge charge) {
