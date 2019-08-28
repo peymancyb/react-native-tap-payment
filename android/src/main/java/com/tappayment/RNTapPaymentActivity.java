@@ -64,36 +64,98 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
     private void configureSDKThemeObject() {
 
         ThemeObject.getInstance()
-                // set Appearance mode [Full Screen Mode - Windowed Mode]
-                .setAppearanceMode(AppearanceMode.WINDOWED_MODE); // **Required**
+        // set Appearance mode [Full Screen Mode - Windowed Mode]
+        .setAppearanceMode(AppearanceMode.FULLSCREEN_MODE) // **Required**
+        .setHeaderTextColor(getResources().getColor(R.color.black1))
+        .setHeaderTextSize(17)
+        .setHeaderBackgroundColor(getResources().getColor(R.color.french_gray_new))
+        .setCardInputTextColor(getResources().getColor(R.color.black))
+        .setCardInputInvalidTextColor(getResources().getColor(R.color.red))
+        .setCardInputPlaceholderTextColor(getResources().getColor(R.color.gray))
+        .setSaveCardSwitchOffThumbTint(getResources().getColor(R.color.french_gray_new))
+        .setSaveCardSwitchOnThumbTint(getResources().getColor(R.color.vibrant_green))
+        .setSaveCardSwitchOffTrackTint(getResources().getColor(R.color.french_gray))
+        .setSaveCardSwitchOnTrackTint(getResources().getColor(R.color.vibrant_green_pressed))
 
+        .setScanIconDrawable(getResources().getDrawable(R.drawable.btn_card_scanner_normal))
+
+        .setPayButtonResourceId(R.drawable.btn_pay_selector)  //btn_pay_merchant_selector
+        .setPayButtonDisabledTitleColor(getResources().getColor(R.color.white))
+        .setPayButtonEnabledTitleColor(getResources().getColor(R.color.white))
+        .setPayButtonTextSize(14)
+        .setPayButtonLoaderVisible(true)
+        .setPayButtonSecurityIconVisible(true);
     }
 
     private void configureSDKSession() {
+
         Bundle extras = getIntent().getExtras();
-        int price = extras.getInt("price");
+        double price = extras.getDouble("price");
         String Currency = extras.getString("Currency");
 
-        if (sdkSession == null){
-            sdkSession = new SDKSession();
-        }
+        // Instantiate SDK Session
+        if (sdkSession == null)
+            sdkSession = new SDKSession(); // ** Required **
 
-        sdkSession.addSessionDelegate(this);
-        sdkSession.instantiatePaymentDataSource();
-        sdkSession.setTransactionCurrency(new TapCurrency(Currency));
-        sdkSession.setCustomer(getCustomer());
-        sdkSession.isUserAllowedToSaveCard(true);
-        sdkSession.setAmount(new BigDecimal(price));
-        sdkSession.setTransactionMode(TransactionMode.PURCHASE);
-        sdkSession.setPostURL("");
-        sdkSession.setPaymentDescription("");
-        sdkSession.setPaymentReference(null);
-        sdkSession.setPaymentStatementDescriptor("");
+        // pass your activity as a session delegate to listen to SDK internal payment
+        // process follow
+        sdkSession.addSessionDelegate(this); // ** Required **
+
+        // initiate PaymentDataSource
+        sdkSession.instantiatePaymentDataSource(); // ** Required **
+
+        // set transaction currency associated to your account
+        sdkSession.setTransactionCurrency(new TapCurrency(Currency)); // ** Required **
+
+
+        // Using static CustomerBuilder method available inside TAP Customer Class you
+        // can populate TAP Customer object and pass it to SDK
+        sdkSession.setCustomer(getCustomer()); // ** Required **
+
+        // Enable or Disable Saving Card
+        sdkSession.isUserAllowedToSaveCard(true); //  ** Required ** you can pass boolean
+
+        // Set Total Amount. The Total amount will be recalculated according to provided
+        // Taxes and Shipping
+        sdkSession.setAmount(new BigDecimal(price)); // ** Required **
+
+        // set transaction mode [TransactionMode.PURCHASE -
+        // TransactionMode.AUTHORIZE_CAPTURE - TransactionMode.SAVE_CARD -
+        // TransactionMode.TOKENIZE_CARD ]
+        sdkSession.setTransactionMode(TransactionMode.AUTHORIZE_CAPTURE); // ** Required **
+
+        // Post URL
+        sdkSession.setPostURL("https://integrations.dev.pyypl.io/pckt/tap/transactionevent"); // ** Optional **
+
+        // Payment Description
+        sdkSession.setPaymentDescription(""); // ** Optional **
+
+        // Payment Reference
+        sdkSession.setPaymentReference(null); // ** Optional ** you can pass null
+
+        // Payment Statement Descriptor
+        sdkSession.setPaymentStatementDescriptor(""); // ** Optional **
+
+        // Enable or Disable 3DSecure
         sdkSession.isRequires3DSecure(true);
-        sdkSession.setReceiptSettings(new Receipt(false, true));
-        sdkSession.setAuthorizeAction(null);
-        sdkSession.setDestination(null);
-        sdkSession.setMerchantID(null);
+
+        // Set Receipt Settings [SMS - Email ]
+        sdkSession.setReceiptSettings(new Receipt(false, true)); // ** Optional ** you can pass Receipt object or null
+
+        // Set Authorize Action
+        sdkSession.setAuthorizeAction(null); // ** Optional ** you can pass AuthorizeAction object or null
+
+        sdkSession.setDestination(null); // ** Optional ** you can pass Destinations object or null
+
+        sdkSession.setMerchantID(null); // ** Optional ** you can pass merchant id or null
+
+        // initPayButton();
+
+        /**
+         * Use this method where ever you want to show TAP SDK Main Screen. This method
+         * must be called after you configured SDK as above This method will be used in
+         * case of you are not using TAP PayButton in your activity.
+         */
         sdkSession.start(this);
     }
 
@@ -108,13 +170,14 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
     public void paymentSucceed(@NonNull Charge charge) {
         System.out.println("Payment Succeeded : " + charge.getStatus());
         System.out.println("Payment Succeeded : " + charge.getDescription());
-        System.out.println("Payment Succeeded : " + charge.getCustomer().getIdentifier());
+        System.out.println("Payment Succeeded : " + charge.getCustomer());
         System.out.println("Payment Succeeded : " + charge.getResponse().getMessage());
+        System.out.println("Payment Succeeded : " + charge.getId());
         showDialog(charge.getId(), charge.getResponse().getMessage(),
                 company.tap.gosellapi.R.drawable.ic_checkmark_normal);
         WritableMap params = Arguments.createMap();
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("custId", "123");
+        resultIntent.putExtra("STATUS", charge.getStatus());
         setResult(100, resultIntent);
         finish();
     };
@@ -155,7 +218,9 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
     @Override
     public void savedCardsList(@NonNull CardsList cardsList) {
 
-    };
+    }
+
+    ;
 
     public void cardTokenizedSuccessfully(@NonNull String token) {
     };
@@ -199,48 +264,36 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
     @Override
     public void invalidCustomerID() {
 
-    };
-
-    // private void sendEvent(String eventName, @Nullable WritableMap params) {
-    // getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-    // .emit(eventName, params);
-    // }
+    }
 
     private void showDialog(String chargeID, String msg, int icon) {
-        System.out.println("error message is => " + msg);
-//        DisplayMetrics displayMetrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//        int width = displayMetrics.widthPixels;
-//        PopupWindow popupWindow;
-//        try {
-//            LayoutInflater inflater = (LayoutInflater) getSystemService(this.LAYOUT_INFLATER_SERVICE);
-//            if (inflater != null) {
-//
-//                View layout = inflater.inflate(company.tap.gosellapi.R.layout.charge_status_layout,
-//                        findViewById(company.tap.gosellapi.R.id.popup_element));
-//
-//                popupWindow = new PopupWindow(layout, width, 250, true);
-//
-//                ImageView status_icon = layout.findViewById(company.tap.gosellapi.R.id.status_icon);
-//                TextView statusText = layout.findViewById(company.tap.gosellapi.R.id.status_text);
-//                TextView chargeText = layout.findViewById(company.tap.gosellapi.R.id.charge_id_txt);
-//                status_icon.setImageResource(icon);
-//                // status_icon.setVisibility(View.INVISIBLE);
-//                chargeText.setText(chargeID);
-//                statusText.setText((msg != null && msg.length() > 30) ? msg.substring(0, 29) : msg);
-//
-//                LinearLayout close_icon_ll = layout.findViewById(company.tap.gosellapi.R.id.cancel_payment_icon);
-//                close_icon_ll.setOnClickListener(v -> {
-//                });
-//
-//                popupWindow.showAtLocation(layout, Gravity.TOP, 0, 50);
-//                popupWindow.getContentView().startAnimation(AnimationUtils.loadAnimation(this, R.anim.popup_show));
-//
-//                setupTimer(popupWindow);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        System.out.println("message is => " + msg);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
+        PopupWindow popupWindow;
+        try {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(this.LAYOUT_INFLATER_SERVICE);
+            if (inflater != null) {
+
+                View layout = inflater.inflate(company.tap.gosellapi.R.layout.charge_status_layout, findViewById(
+                        company.tap.gosellapi.R.id.popup_element));
+                popupWindow = new PopupWindow(layout, width, 250, true);
+                ImageView status_icon = layout.findViewById(company.tap.gosellapi.R.id.status_icon);
+                TextView statusText = layout.findViewById(company.tap.gosellapi.R.id.status_text);
+                TextView chargeText = layout.findViewById(company.tap.gosellapi.R.id.charge_id_txt);
+                status_icon.setImageResource(icon);
+                chargeText.setText(chargeID);
+                statusText.setText((msg!=null&& msg.length()>30)?msg.substring(0,29):msg);
+                popupWindow.showAtLocation(layout, Gravity.TOP, 0, 50);
+                popupWindow.getContentView().startAnimation(AnimationUtils.loadAnimation(this, R.anim.popup_show));
+
+                setupTimer(popupWindow);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
     }
 
     private void setupTimer(PopupWindow popupWindow) {
@@ -250,6 +303,7 @@ public class RNTapPaymentActivity extends AppCompatActivity implements SessionDe
             if (popupWindow.isShowing()) {
                 popupWindow.dismiss();
             }
+            this.sessionCancelled();
         };
 
         popupWindow.setOnDismissListener(() -> handler.removeCallbacks(runnable));
